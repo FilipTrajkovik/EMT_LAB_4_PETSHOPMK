@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,10 +56,11 @@ public class OrderServiceImplTests {
         OrderForm orderForm = new OrderForm();
         orderForm.setCurrency(Currency.MKD);
         orderForm.setItems(Arrays.asList(oi1,oi2));
+        orderForm.setOrderedOn(LocalDateTime.now());
 
         OrderId newOrderId = orderService.placeOrder(orderForm);
         Order newOrder = orderService.findById(newOrderId).orElseThrow(OrderIdNotExistException::new);
-        Assertions.assertEquals(newOrder.orderPrice(),Money.valueOf(Currency.MKD,2500));
+        Assertions.assertEquals(newOrder.orderPrice(),Money.valueOf(Currency.MKD,3500));
 
     }
 
@@ -79,6 +81,7 @@ public class OrderServiceImplTests {
         OrderForm orderForm = new OrderForm();
         orderForm.setCurrency(Currency.MKD);
         orderForm.setItems(Arrays.asList(oi1,oi2));
+        orderForm.setOrderedOn(LocalDateTime.now());
 
         OrderId newOrderId = orderService.placeOrder(orderForm);
         Order newOrder = orderService.findById(newOrderId).orElseThrow(OrderIdNotExistException::new);
